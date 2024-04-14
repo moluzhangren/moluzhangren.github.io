@@ -2,13 +2,81 @@
 <html lang="zh">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>coke</title>
+    <style>
+        body {
+            background: url('1.jpg') no-repeat center center fixed;
+            background-size: cover;
+        }
+        canvas {
+            display: block;
+        }
+    </style>
 </head>
 <body>
-    <video width="320" height="240" controls>
-        <source src="https://v1.kwaicdn.com/ksc2/W8rOZatzvUjVHY6C606e8Df2Wohzrr64C4INKuHQC_wjjZksYAFAM94cu23Hb3oy47YKyqIdfS-adeZpkF5C6PPRyfmIQb2_MdvAylMg9lyLo5M5yE16awYBH-zoP5OvMY89wLAn8q0Cx1pojZXEG7v0XhbOoNsnDSLDrNTholKss55wRNMVaix5YFFpIQLj.mp4?pkey=AAWflk19VyashqVTNEGPmgu9gZNZ0kGHhsm1E089SUdti8_2J_Lc9hCpbZ-t6Yyj3MHRo0GHpZnJQjRO3DeKVX99nBblw99nCY91MAGppL4E2I46JE71d1ANqmZmA4T6hn4&tag=1-1713090120-unknown-0-ndn7wwov2x-53bf2fde78f2f6d0&clientCacheKey=3xkehgyjd8wu5um_b.mp4&di=702f5181&bp=10004&tt=b&ss=vp" type="video/mp4">
-        您的浏览器不支持视频播放。
-    </video>
+    <canvas id="snow"></canvas>
 </body>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    var canvas = document.getElementById('snow');
+    var ctx = canvas.getContext('2d');
+
+    // 设置 canvas 的大小为全屏
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    // 加载雪花图片
+    var snowflakeImage = new Image();
+    snowflakeImage.src = 'snowflake.png';
+
+    // 雪花的数量
+    var numberOfSnowflakes = 100;
+    var snowflakes = [];
+
+    // 绘制雪花
+    function drawSnowflakes() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        for (var i = 0; i < numberOfSnowflakes; i++) {
+            var snowflake = snowflakes[i];
+            ctx.drawImage(snowflakeImage, snowflake.x, snowflake.y, snowflake.size, snowflake.size);
+        }
+
+        moveSnowflakes();
+    }
+
+    // 移动雪花
+    function moveSnowflakes() {
+        for (var i = 0; i < numberOfSnowflakes; i++) {
+            var snowflake = snowflakes[i];
+            snowflake.y += snowflake.speed;
+            if (snowflake.y > canvas.height) {
+                snowflake.y = 0;
+            }
+        }
+    }
+
+    // 初始化雪花
+    function initializeSnowflakes() {
+        for (var i = 0; i < numberOfSnowflakes; i++) {
+            snowflakes.push({
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height,
+                size: Math.random() * 20 + 10, // 随机大小
+                speed: Math.random() * 2 + 1 // 随机速度
+            });
+        }
+    }
+
+    // 使用 requestAnimationFrame 来持续绘制雪花
+    function animate() {
+        requestAnimationFrame(animate);
+        drawSnowflakes();
+    }
+
+    // 初始化雪花并开始动画
+    initializeSnowflakes();
+    animate();
+});
+</script>
 </html>
