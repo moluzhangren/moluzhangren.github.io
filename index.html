@@ -9,54 +9,90 @@
     <style>
     </style>
 </head>
-    <body onload="playRandomMusic()">
-        <div id="music-player"></div>
-        <script>
-            function playRandomMusic() {
-                // 发起 HTTP 请求获取 JSON 数据
-                fetch("https://api.uomg.com/api/rand.music?sort=热歌榜&format=json")
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.code === 1 && data.data && data.data.url) {
-                            const musicUrl = data.data.url;  // 获取歌曲播放链接
-                            const musicId = extractMusicId(musicUrl);  // 从链接中提取音乐 ID
-                            // 创建 iframe 元素
-                            const iframe = document.createElement("iframe");
-                            iframe.setAttribute("frameborder", "no");
-                            iframe.setAttribute("border", "0");
-                            iframe.setAttribute("marginwidth", "0");
-                            iframe.setAttribute("marginheight", "0");
-                            iframe.setAttribute("width", "330");
-                            iframe.setAttribute("height", "86");
-                            iframe.setAttribute("src", `//music.163.com/outchain/player?type=2&id=${musicId}&auto=1&height=66`);
-                            // 将 iframe 添加到页面中的 music-player 元素中
-                            const musicPlayerDiv = document.getElementById("music-player");
-                            musicPlayerDiv.appendChild(iframe);
+<body>
+    <div id="music-player"></div>
+    <button onclick="playNextMusic()">下一首</button>
+    <script>
+        // 当前播放的音乐 ID
+        let currentMusicId = null;
+
+        // 页面加载完成后开始播放音乐
+        window.onload = function() {
+            playRandomMusic();
+        };
+
+        // 播放随机音乐
+        function playRandomMusic() {
+            // 发起 HTTP 请求获取 JSON 数据
+            fetch("https://api.uomg.com/api/rand.music?sort=热歌榜&format=json")
+                .then(response => response.json())
+                .then(data => {
+                    if (data.code === 1 && data.data && data.data.url) {
+                        const musicUrl = data.data.url;  // 获取歌曲播放链接
+                        const musicId = extractMusicId(musicUrl);  // 从链接中提取音乐 ID
+                        // 如果当前音乐 ID 与新获取的音乐 ID 不同，则替换音乐
+                        if (musicId !== currentMusicId) {
+                            currentMusicId = musicId;
+                            replaceMusicPlayer(musicId);
                             console.log("歌曲播放链接：" + musicUrl);
                         } else {
-                            console.error("获取音乐失败：" + data.msg);
-                            alert("获取音乐失败，请稍后重试");
+                            // 如果音乐 ID 相同，则继续播放当前音乐
+                            console.log("当前音乐仍在播放，无需替换");
                         }
-                    })
-                    .catch(error => {
-                        console.error('获取音乐失败：', error);
+                    } else {
+                        console.error("获取音乐失败：" + data.msg);
                         alert("获取音乐失败，请稍后重试");
-                    });
+                    }
+                })
+                .catch(error => {
+                    console.error('获取音乐失败：', error);
+                    alert("获取音乐失败，请稍后重试");
+                });
+        }
+
+        // 从音乐链接中提取音乐 ID
+        function extractMusicId(url) {
+            const idRegex = /id=(\d+)/;
+            const match = url.match(idRegex);
+            if (match && match[1]) {
+                return match[1];
+            } else {
+                console.error("无法从音乐链接中提取音乐 ID");
+                return null;
             }
-            // 从音乐链接中提取音乐 ID
-            function extractMusicId(url) {
-                const idRegex = /id=(\d+)/;
-                const match = url.match(idRegex);
-                if (match && match[1]) {
-                    return match[1];
-                } else {
-                    console.error("无法从音乐链接中提取音乐 ID");
-                    return null;
-                }
-            }
-        </script>
-    </body>
-    <!DOCTYPE HTML>
+        }
+
+        // 替换音乐播放器
+        function replaceMusicPlayer(musicId) {
+            // 移除旧的 iframe 元素
+            const musicPlayerDiv = document.getElementById("music-player");
+            musicPlayerDiv.innerHTML = '';
+
+            // 创建新的 iframe 元素
+            const iframe = document.createElement("iframe");
+            iframe.setAttribute("frameborder", "no");
+            iframe.setAttribute("border", "0");
+            iframe.setAttribute("marginwidth", "0");
+            iframe.setAttribute("marginheight", "0");
+            iframe.setAttribute("width", "330");
+            iframe.setAttribute("height", "86");
+            iframe.setAttribute("src", `//music.163.com/outchain/player?type=2&id=${musicId}&auto=1&height=66`);
+
+            // 将新的 iframe 添加到页面中的 music-player 元素中
+            musicPlayerDiv.appendChild(iframe);
+        }
+
+        // 播放下一首音乐
+        function playNextMusic() {
+            playRandomMusic();
+        }
+    </script>
+</body>
+
+
+
+
+
 <html>
 </html>
 <div id="yiyan">加载中...</div>
