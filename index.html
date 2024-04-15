@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>coke</title>
     <link href="/style.css" rel="stylesheet" />
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?">
     <!--2024年4月14日-->
     <style>
     </style>
@@ -14,8 +15,8 @@
             function playRandomMusic() {
                 // 发起 HTTP 请求获取 JSON 数据
                 fetch("https://api.uomg.com/api/rand.music?sort=热歌榜&format=json")
-                    。then(response => response.json())
-                    。then(data => {
+                    .then(response => response.json())
+                    .then(data => {
                         if (data.code === 1 && data.data && data.data.url) {
                             const musicUrl = data.data.url;  // 获取歌曲播放链接
                             const musicId = extractMusicId(musicUrl);  // 从链接中提取音乐 ID
