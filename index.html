@@ -27,55 +27,55 @@
     </style>
 </head>
     </div>
-    <div id="music-player"></div>
-    <script>
-        function playRandomMusic() {
-            // 发起 HTTP 请求获取 JSON 数据
-            fetch("https://api.uomg.com/api/rand.music?sort=热歌榜&format=json")
-                .then(response => response.json())
-                .then(data => {
-                    if (data.code === 1 && data.data && data.data.url) {
-                        const musicUrl = data.data.url;  // 获取歌曲播放链接
-                        const musicId = extractMusicId(musicUrl);  // 从链接中提取音乐 ID
-
-                        // 创建 iframe 元素
-                        const iframe = document.createElement("iframe");
-                        iframe.setAttribute("frameborder", "no");
-                        iframe.setAttribute("border", "0");
-                        iframe.setAttribute("marginwidth", "0");
-                        iframe.setAttribute("marginheight", "0");
-                        iframe.setAttribute("width", "330");
-                        iframe.setAttribute("height", "86");
-                        iframe.setAttribute("src", `//music.163.com/outchain/player?type=2&id=${musicId}&auto=1&height=66`);
-
-                        // 将 iframe 添加到页面中的 music-player 元素中
-                        const musicPlayerDiv = document.getElementById("music-player");
-                        musicPlayerDiv.appendChild(iframe);
-
-                        console.log("歌曲播放链接：" + musicUrl);
-                    } else {
-                        console.error("获取音乐失败：" + data.msg);
+    <body onload="playRandomMusic()">
+        <div id="music-player"></div>
+    
+        <script>
+            function playRandomMusic() {
+                // 发起 HTTP 请求获取 JSON 数据
+                fetch("https://api.uomg.com/api/rand.music?sort=热歌榜&format=json")
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.code === 1 && data.data && data.data.url) {
+                            const musicUrl = data.data.url;  // 获取歌曲播放链接
+                            const musicId = extractMusicId(musicUrl);  // 从链接中提取音乐 ID
+    
+                            // 创建 iframe 元素
+                            const iframe = document.createElement("iframe");
+                            iframe.setAttribute("frameborder", "no");
+                            iframe.setAttribute("border", "0");
+                            iframe.setAttribute("marginwidth", "0");
+                            iframe.setAttribute("marginheight", "0");
+                            iframe.setAttribute("width", "330");
+                            iframe.setAttribute("height", "86");
+                            iframe.setAttribute("src", `//music.163.com/outchain/player?type=2&id=${musicId}&auto=1&height=66`);
+                            // 将 iframe 添加到页面中的 music-player 元素中
+                            const musicPlayerDiv = document.getElementById("music-player");
+                            musicPlayerDiv.appendChild(iframe);
+                            console.log("歌曲播放链接：" + musicUrl);
+                        } else {
+                            console.error("获取音乐失败：" + data.msg);
+                            alert("获取音乐失败，请稍后重试");
+                        }
+                    })
+                    .catch(error => {
+                        console.error('获取音乐失败：', error);
                         alert("获取音乐失败，请稍后重试");
-                    }
-                })
-                .catch(error => {
-                    console.error('获取音乐失败：', error);
-                    alert("获取音乐失败，请稍后重试");
-                });
-        }
-
-        // 从音乐链接中提取音乐 ID
-        function extractMusicId(url) {
-            const idRegex = /id=(\d+)/;
-            const match = url.match(idRegex);
-            if (match && match[1]) {
-                return match[1];
-            } else {
-                console.error("无法从音乐链接中提取音乐 ID");
-                return null;
+                    });
             }
-        }
-    </script>
+            // 从音乐链接中提取音乐 ID
+            function extractMusicId(url) {
+                const idRegex = /id=(\d+)/;
+                const match = url.match(idRegex);
+                if (match && match[1]) {
+                    return match[1];
+                } else {
+                    console.error("无法从音乐链接中提取音乐 ID");
+                    return null;
+                }
+            }
+        </script>
+    </body>
 </body>
 <body>
     <canvas id="snow"></canvas>
