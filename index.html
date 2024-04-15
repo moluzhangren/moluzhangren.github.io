@@ -3,33 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <title>coke</title>
+    <link href="/style.css" rel="stylesheet" />
     <!--2024年4月14日-->
     <style>
-        body {
-            background: url('1.jpg') no-repeat center center fixed;
-            background-size: cover;
-            margin: 0;
-            padding: 0;
-            position: relative;
-        }
-        canvas {
-            display: block;
-        }
-        /* 调整音乐播放器的样式 */
-        #music-player {
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            background-color: rgba(255, 255, 255, 0.5);
-            padding: 10px;
-            border-radius: 10px;
-        }
     </style>
 </head>
-    </div>
     <body onload="playRandomMusic()">
         <div id="music-player"></div>
-    
         <script>
             function playRandomMusic() {
                 // 发起 HTTP 请求获取 JSON 数据
@@ -39,7 +19,6 @@
                         if (data.code === 1 && data.data && data.data.url) {
                             const musicUrl = data.data.url;  // 获取歌曲播放链接
                             const musicId = extractMusicId(musicUrl);  // 从链接中提取音乐 ID
-    
                             // 创建 iframe 元素
                             const iframe = document.createElement("iframe");
                             iframe.setAttribute("frameborder", "no");
@@ -76,6 +55,29 @@
             }
         </script>
     </body>
+    <!DOCTYPE HTML>
+<html>
+</html>
+<div id="yiyan">加载中...</div>
+<script>
+    // 使用Fetch API获取一言数据
+    fetch('https://tenapi.cn/v2/yiyan', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: 'format=json'
+    })
+        .then(response => response.json())
+        .then(data => {
+            const yiyanDiv = document.getElementById('yiyan');
+            yiyanDiv.textContent = data.data.hitokoto;
+        })
+        .catch(error => {
+            console.error('获取一言失败:', error);
+        });
+</script>
+</body>
 </body>
 <body>
     <canvas id="snow"></canvas>
