@@ -81,69 +81,65 @@
 </body>
 <body>
     <canvas id="snow"></canvas>
-
     <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        var canvas = document.getElementById('snow');
-        var ctx = canvas.getContext('2d');
-
-        // 设置 canvas 的大小为全屏
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-
-        // 加载雪花图片
-        var snowflakeImage = new Image();
-        snowflakeImage.src = '1.png';
-
-        // 雪花的数量
-        var numberOfSnowflakes = 100;
-        var snowflakes = [];
-
-        // 绘制雪花
-        function drawSnowflakes() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-            for (var i = 0; i < numberOfSnowflakes; i++) {
-                var snowflake = snowflakes[i];
-                ctx.drawImage(snowflakeImage, snowflake.x, snowflake.y, snowflake.size, snowflake.size);
+        document.addEventListener('DOMContentLoaded', function() {
+            var canvas = document.getElementById('snow');
+            var ctx = canvas.getContext('2d');
+            // 设置 canvas 的大小为全屏
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            // 加载雪花图片
+            var snowflakeImage = new Image();
+            snowflakeImage.src = '1.png';
+            // 雪花的数量
+            var numberOfSnowflakes = 100;
+            var snowflakes = [];
+            // 绘制雪花
+            function drawSnowflakes() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                for (var i = 0; i < numberOfSnowflakes; i++) {
+                    var snowflake = snowflakes[i];
+                    snowflake.rotation += snowflake.rotationSpeed; // 更新旋转角度
+                    ctx.save(); // 保存当前绘图状态
+                    ctx.translate(snowflake.x, snowflake.y); // 将坐标原点移至雪花中心
+                    ctx.rotate(snowflake.rotation); // 旋转雪花
+                    ctx.drawImage(snowflakeImage, -snowflake.size / 2, -snowflake.size / 2, snowflake.size, snowflake.size);
+                    ctx.restore(); // 恢复之前保存的绘图状态
+                }
+                moveSnowflakes();
             }
-
-            moveSnowflakes();
-        }
-
-        // 移动雪花
-        function moveSnowflakes() {
-            for (var i = 0; i < numberOfSnowflakes; i++) {
-                var snowflake = snowflakes[i];
-                snowflake.y += snowflake.speed;
-                if (snowflake.y > canvas.height) {
-                    snowflake.y = 0;
+            // 移动雪花
+            function moveSnowflakes() {
+                for (var i = 0; i < numberOfSnowflakes; i++) {
+                    var snowflake = snowflakes[i];
+                    snowflake.y += snowflake.speed;
+                    if (snowflake.y > canvas.height) {
+                        snowflake.y = 0;
+                    }
                 }
             }
-        }
-
-        // 初始化雪花
-        function initializeSnowflakes() {
-            for (var i = 0; i < numberOfSnowflakes; i++) {
-                snowflakes.push({
-                    x: Math.random() * canvas.width,
-                    y: Math.random() * canvas.height,
-                    size: Math.random() * 20 + 10, // 随机大小
-                    speed: Math.random() * 2 + 1 // 随机速度
-                });
+            // 初始化雪花
+            function initializeSnowflakes() {
+                for (var i = 0; i < numberOfSnowflakes; i++) {
+                    snowflakes.push({
+                        x: Math.random() * canvas.width,
+                        y: Math.random() * canvas.height,
+                        size: Math.random() * 20 + 10, // 随机大小
+                        speed: Math.random() * 2 + 1, // 随机速度
+                        rotation: 0, // 初始旋转角度为0
+                        rotationSpeed: Math.random() * 0.02 // 随机旋转速度
+                    });
+                }
             }
-        }
-
-        // 使用 requestAnimationFrame 来持续绘制雪花
-        function animate() {
-            requestAnimationFrame(animate);
-            drawSnowflakes();
-        }
-
-        // 初始化雪花并开始动画
-        initializeSnowflakes();
-        animate();
-    });
+            // 使用 requestAnimationFrame 来持续绘制雪花
+            function animate() {
+                requestAnimationFrame(animate);
+                drawSnowflakes();
+            }
+            // 初始化雪花并开始动画
+            initializeSnowflakes();
+            animate();
+        });
     </script>
 </body>
 </html>
