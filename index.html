@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>coke</title>
     <link href="/style.css" rel="stylesheet" />
+    <link rel="林彦阳" href="favicon.ico">
     <!--2024年4月14日-->
     <style>
     </style>
@@ -81,22 +82,28 @@
 </body>
 <body>
     <canvas id="snow"></canvas>
+
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             var canvas = document.getElementById('snow');
             var ctx = canvas.getContext('2d');
+
             // 设置 canvas 的大小为全屏
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
+
             // 加载雪花图片
             var snowflakeImage = new Image();
             snowflakeImage.src = '1.png';
+
             // 雪花的数量
             var numberOfSnowflakes = 100;
             var snowflakes = [];
+
             // 绘制雪花
             function drawSnowflakes() {
                 ctx.clearRect(0, 0, canvas.width, canvas.height);
+
                 for (var i = 0; i < numberOfSnowflakes; i++) {
                     var snowflake = snowflakes[i];
                     snowflake.rotation += snowflake.rotationSpeed; // 更新旋转角度
@@ -106,8 +113,10 @@
                     ctx.drawImage(snowflakeImage, -snowflake.size / 2, -snowflake.size / 2, snowflake.size, snowflake.size);
                     ctx.restore(); // 恢复之前保存的绘图状态
                 }
+
                 moveSnowflakes();
             }
+
             // 移动雪花
             function moveSnowflakes() {
                 for (var i = 0; i < numberOfSnowflakes; i++) {
@@ -118,6 +127,7 @@
                     }
                 }
             }
+
             // 初始化雪花
             function initializeSnowflakes() {
                 for (var i = 0; i < numberOfSnowflakes; i++) {
@@ -131,11 +141,13 @@
                     });
                 }
             }
+
             // 使用 requestAnimationFrame 来持续绘制雪花
             function animate() {
                 requestAnimationFrame(animate);
                 drawSnowflakes();
             }
+
             // 初始化雪花并开始动画
             initializeSnowflakes();
             animate();
