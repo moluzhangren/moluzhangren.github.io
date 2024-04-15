@@ -19,6 +19,23 @@ canvas {
     border-radius: 10px;
 }
 
+/* 按钮样式 */
+button {
+    position: absolute;
+    top: 130px; /* 调整按钮位置 */
+    left: 20px;
+    padding: 8px 16px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
 /*每日一言*/
 #yiyan {
     position: fixed;
