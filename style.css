@@ -50,5 +50,20 @@ canvas {
     border-radius: 5px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
+
+#time {
+    font-size: 18px; /* 调小年月日星期字体大小 */
+    color: white;
+    top: 20px;
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 10px;
+    text-align: center;
+}
+#clock {
+    font-size: 80px; /* 调大时分秒字体大小 */
     font-weight: bold;
 }
+
