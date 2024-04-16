@@ -20,7 +20,7 @@ canvas {
 }
 
 /* 按钮样式 */
-button {
+#button1 {
     position: absolute;
     top: 130px; /* 调整按钮位置 */
     left: 20px;
@@ -31,10 +31,11 @@ button {
     border-radius: 4px;
     cursor: pointer;
 }
-
-button:hover {
+#button1:hover {
     background-color: #45a049;
 }
+
+
 
 /*每日一言*/
 #yiyan {
@@ -48,4 +49,20 @@ button:hover {
     padding: 10px;
     border-radius: 5px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+#body1 {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    color: white;
+    background-color: black;
+}
+
+#time {
+    font-size: 18px; /* 调小年月日星期字体大小 */
+    margin-top: 50px;
+}
+#clock {
+    font-size: 80px; /* 调大时分秒字体大小 */
+    font-weight: bold;
 }
