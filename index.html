@@ -89,21 +89,39 @@
     </script>
 </body>
 
+<body id="body1">
+    <div id="time"></div>
+    
+    <script>
+    function updateTime() {
+      var now = new Date();
+      var year = now.getFullYear();
+      var month = now.getMonth() + 1;
+      var date = now.getDate();
+      var day = now.getDay();
+      var hour = now.getHours();
+      var minute = now.getMinutes();
+      var second = now.getSeconds();
+    
+      var weekDays = ["日", "一", "二", "三", "四", "五", "六"];
+    
+      var timeString = "<div id='clock'><span style='font-size: larger'>" + hour + "</span>:<span style='font-size: larger'>" + minute + "</span>:<span style='font-size: larger'>" + second + "</span></div><br>";
+      timeString += "<span style='font-size: smaller'>" + year + "年" + month + "月" + date + "日 星期" + weekDays[day] + "</span><br>";
+      // 在此添加初月初几的计算方法
+    
+      document.getElementById("time").innerHTML = timeString;
+    }
+    
+    // 初月初几的计算方法可以根据具体需求自行添加
+    
+    // 每秒更新一次时间
+    setInterval(updateTime, 1000);
+    
+    // 页面加载时先执行一次，避免页面打开时空白
+    updateTime();
+    </script>
+    </body>
 
-
-<div id="yiyan">加载中...</div>
-<script>
-    // 使用Fetch API获取一言数据
-    fetch('https://v1.hitokoto.cn')
-        .then(response => response.json())
-        .then(data => {
-            const yiyanDiv = document.getElementById('yiyan');
-            yiyanDiv.textContent = data.hitokoto;
-        })
-        .catch(error => {
-            console.error('获取一言失败:', error);
-        });
-</script>
 <body>
     <canvas id="snow"></canvas>
 
